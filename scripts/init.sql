@@ -11,6 +11,8 @@ CREATE TABLE products (
   created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
   updated_at TIMESTAMPTZ
 );
+
 DESCRIBE products;
 
-SELECT * FROM employee;
+SELECT * FROM products;
+
