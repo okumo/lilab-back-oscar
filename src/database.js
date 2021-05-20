@@ -4,7 +4,8 @@ const mysqlConnection = mysql.createConnection({
     host: "0.0.0.0",
     user: 'user',
     password: 'password',
-    database: 'products'
+    database: 'products',
+    multipleStatements: true
 })
 
 mysqlConnection.connect(function (err) {

@@ -13,8 +13,37 @@ router.get('/products', function(req, res){
     })
 })
 
-router.put('/update', (req, res)=>{
-    console.log(req.body)
+router.put('/updateProducts', (req, res)=>{
+    let productsArray = req.body
+    mysqlConnection.query('SELECT * FROM products', (err, rows, fields)=>{
+       if(!err){
+           let arrayData = (Object.values(JSON.parse(JSON.stringify(rows))))
+           let rowsUpdated=[]
+           arrayData.forEach(element=>{
+               let filteredValues = productsArray.filter(product=>product.id==element.id)
+               if(filteredValues.length){
+                   let countBought = filteredValues.length
+                   element.stock = element.stock-countBought
+                   rowsUpdated.push(element)
+               }
+           })
+           let queryString=""
+           rowsUpdated.forEach(row=>{
+               queryString= queryString.concat(` UPDATE products SET stock=${row.stock} WHERE id=${row.id};`)
+           })
+           if(queryString!==""){
+               mysqlConnection.query(queryString, (err, rows, fields)=>{
+                   if(!err){
+                       res.json({
+                           status: 200
+                       })
+                   }else{
+                       console.log(err)
+                   }
+               })
+           }
+        }
+    })
 } )
 
 
