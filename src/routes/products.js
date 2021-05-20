@@ -13,4 +13,9 @@ router.get('/products', function(req, res){
     })
 })
 
+router.put('/update', (req, res)=>{
+    console.log(req.body)
+} )
+
+
 module.exports = router;
